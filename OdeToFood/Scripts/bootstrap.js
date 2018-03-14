@@ -319,7 +319,7 @@ if (!jQuery) { throw new Error("Bootstrap requires jQuery") }
     this.sliding     =
     this.interval    =
     this.$active     =
-    this.$items      = null
+    this.$Models      = null
 
     this.options.pause == 'hover' && this.$element
       .on('mouseenter', $.proxy(this.pause, this))
@@ -345,22 +345,22 @@ if (!jQuery) { throw new Error("Bootstrap requires jQuery") }
   }
 
   Carousel.prototype.getActiveIndex = function () {
-    this.$active = this.$element.find('.item.active')
-    this.$items  = this.$active.parent().children()
+    this.$active = this.$element.find('.Model.active')
+    this.$Models  = this.$active.parent().children()
 
-    return this.$items.index(this.$active)
+    return this.$Models.index(this.$active)
   }
 
   Carousel.prototype.to = function (pos) {
     var that        = this
     var activeIndex = this.getActiveIndex()
 
-    if (pos > (this.$items.length - 1) || pos < 0) return
+    if (pos > (this.$Models.length - 1) || pos < 0) return
 
     if (this.sliding)       return this.$element.one('slid', function () { that.to(pos) })
     if (activeIndex == pos) return this.pause().cycle()
 
-    return this.slide(pos > activeIndex ? 'next' : 'prev', $(this.$items[pos]))
+    return this.slide(pos > activeIndex ? 'next' : 'prev', $(this.$Models[pos]))
   }
 
   Carousel.prototype.pause = function (e) {
@@ -387,7 +387,7 @@ if (!jQuery) { throw new Error("Bootstrap requires jQuery") }
   }
 
   Carousel.prototype.slide = function (type, next) {
-    var $active   = this.$element.find('.item.active')
+    var $active   = this.$element.find('.Model.active')
     var $next     = next || $active[type]()
     var isCycling = this.interval
     var direction = type == 'next' ? 'left' : 'right'
@@ -396,7 +396,7 @@ if (!jQuery) { throw new Error("Bootstrap requires jQuery") }
 
     if (!$next.length) {
       if (!this.options.wrap) return
-      $next = this.$element.find('.item')[fallback]()
+      $next = this.$element.find('.Model')[fallback]()
     }
 
     this.sliding = true
@@ -763,17 +763,17 @@ if (!jQuery) { throw new Error("Bootstrap requires jQuery") }
       return $this.click()
     }
 
-    var $items = $('[role=menu] li:not(.divider):visible a', $parent)
+    var $Models = $('[role=menu] li:not(.divider):visible a', $parent)
 
-    if (!$items.length) return
+    if (!$Models.length) return
 
-    var index = $items.index($items.filter(':focus'))
+    var index = $Models.index($Models.filter(':focus'))
 
     if (e.keyCode == 38 && index > 0)                 index--                        // up
-    if (e.keyCode == 40 && index < $items.length - 1) index++                        // down
+    if (e.keyCode == 40 && index < $Models.length - 1) index++                        // down
     if (!~index)                                      index=0
 
-    $items.eq(index).focus()
+    $Models.eq(index).focus()
   }
 
   function clearMenus() {
