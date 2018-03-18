@@ -16,6 +16,7 @@ namespace OdeToFood.Models
         public DbSet<Restaurant> Resteurants { get; set; }
         public DbSet<ResteurantReview> Reviews { get; set; }
 
+        public System.Data.Entity.DbSet<OdeToFood.Models.Comments> Comments { get; set; }
     }
 
 }
