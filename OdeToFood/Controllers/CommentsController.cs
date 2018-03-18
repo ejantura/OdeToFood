@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Hangfire;
 using OdeToFood.Models;
 
 namespace OdeToFood.Controllers
@@ -53,16 +54,9 @@ namespace OdeToFood.Controllers
                 db.Comments.Add(comments);
                 db.SaveChanges();
 
-                var email = new NewCommentEmail
-                {
-                    To = comments.Email,
-                    UserName = comments.UserName,
-                    Comment = comments.Comment
-                };
 
-                email.Send();
-
-           }
+                BackgroundJob.Enqueue(() => NewComment.NotifyNewComment(comments.Id));
+            }
             return RedirectToAction("Index");
         }
 
