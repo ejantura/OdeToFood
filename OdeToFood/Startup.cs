@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using System.Web;
 using Hangfire;
 using Hangfire.SqlServer;
 using Microsoft.Owin;
@@ -13,14 +14,11 @@ namespace OdeToFood
     {
         public void Configuration(IAppBuilder app)
         {
-            GlobalConfiguration.Configuration
-            .UseSqlServerStorage(
-                "DefaultConnection"
-              //  ,new SqlServerStorageOptions { QueuePollInterval = TimeSpan.FromSeconds(1) }
-                );
+            GlobalConfiguration.Configuration.UseSqlServerStorage("DefaultConnection");
 
+            var options = new DashboardOptions { AppPath = VirtualPathUtility.ToAbsolute("/Comments/Index") };
 
-            app.UseHangfireDashboard();
+            app.UseHangfireDashboard("/HangfireJobs", options);
             app.UseHangfireServer();
 
         }
