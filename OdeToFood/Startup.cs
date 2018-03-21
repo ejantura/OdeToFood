@@ -15,8 +15,9 @@ namespace OdeToFood
         {
             GlobalConfiguration.Configuration
             .UseSqlServerStorage(
-                "DefaultConnection",
-                new SqlServerStorageOptions { QueuePollInterval = TimeSpan.FromSeconds(1) });
+                "DefaultConnection"
+              //  ,new SqlServerStorageOptions { QueuePollInterval = TimeSpan.FromSeconds(1) }
+                );
 
 
             app.UseHangfireDashboard();
