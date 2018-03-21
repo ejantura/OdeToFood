@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Globalization;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 using Hangfire;
@@ -54,8 +56,8 @@ namespace OdeToFood.Controllers
                 db.Comments.Add(comments);
                 db.SaveChanges();
 
-
                 BackgroundJob.Enqueue(() => NewComment.NotifyNewComment(comments.Id));
+              //  RecurringJob.AddOrUpdate(() => NewComment.Send("ejantura@gmail.com", "test", "Test Recuret Task"), Cron.Minutely);
             }
             return RedirectToAction("Index");
         }

@@ -37,6 +37,26 @@ namespace OdeToFood
                 emailService.Send(email);
             }
         }
+
+        public static void Send(string emailAddress, string userName, string message)
+        {
+            var viewsPath = Path.GetFullPath(HostingEnvironment.MapPath(@"~/Views/Emails"));
+            var engines = new ViewEngineCollection();
+            engines.Add(new FileSystemRazorViewEngine(viewsPath));
+
+            EmailService emailService = new EmailService(engines);
+
+            // Get comment and send a notification.
+            var email = new NewCommentEmail
+                {
+                    To = emailAddress,
+                    UserName = userName,
+                    Comment = message
+            };
+
+                emailService.Send(email);
+            
+        }
     }
 }
 
